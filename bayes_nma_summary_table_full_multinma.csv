@@ -1,0 +1,51 @@
+Treatment,N,SMD,lower CrI,upper CrI,"SMD vs Placebo (mean, 95% CrI)"
+Placebo,12554,0,0,0,0.000 (0.000 to 0.000)
+Acupuncture,264,NA,NA,NA,NA
+Acupuncture + AD,584,NA,NA,NA,NA
+Any AD,452,NA,NA,NA,NA
+Any psychotherapy,37,NA,NA,NA,NA
+Attention placebo,61,NA,NA,NA,NA
+Behavioural therapies individual,137,NA,NA,NA,NA
+Behavioural therapies individual + AD,22,NA,NA,NA,NA
+Cognitive and cognitive behavioural therapies group,165,NA,NA,NA,NA
+Cognitive and cognitive behavioural therapies group + AD,63,NA,NA,NA,NA
+Cognitive and cognitive behavioural therapies individual,996,NA,NA,NA,NA
+Cognitive and cognitive behavioural therapies individual + AD,192,NA,NA,NA,NA
+Cognitive and cognitive behavioural therapies individual + placebo,61,NA,NA,NA,NA
+Counselling individual,404,NA,NA,NA,NA
+Counselling individual + AD,57,NA,NA,NA,NA
+Counselling individual + placebo,26,NA,NA,NA,NA
+Exercise group,106,NA,NA,NA,NA
+Exercise group + AD,79,NA,NA,NA,NA
+Exercise individual,78,NA,NA,NA,NA
+Exercise individual + AD,40,NA,NA,NA,NA
+Interpersonal psychotherapy (IPT) individual,146,NA,NA,NA,NA
+Interpersonal psychotherapy (IPT) individual + AD,99,NA,NA,NA,NA
+Interpersonal psychotherapy (IPT) individual + placebo,69,NA,NA,NA,NA
+Light therapy,32,NA,NA,NA,NA
+Light therapy + AD,54,NA,NA,NA,NA
+Mindfulness or meditation group,15,NA,NA,NA,NA
+Mirtazapine,1884,NA,NA,NA,NA
+Music therapy group,12,NA,NA,NA,NA
+No treatment,504,NA,NA,NA,NA
+Peer support group,39,NA,NA,NA,NA
+Peer support group + AD,42,NA,NA,NA,NA
+Problem solving group,47,NA,NA,NA,NA
+Problem solving individual,367,NA,NA,NA,NA
+Psychoeducation group,44,NA,NA,NA,NA
+Psychoeducation group + AD,27,NA,NA,NA,NA
+Relaxation individual + AD,10,NA,NA,NA,NA
+Relaxation individual + placebo,11,NA,NA,NA,NA
+Self-help,344,NA,NA,NA,NA
+Self-help with support,230,NA,NA,NA,NA
+Sham acupuncture,108,NA,NA,NA,NA
+Short-term psychodynamic psychotherapies individual,233,NA,NA,NA,NA
+Short-term psychodynamic psychotherapies individual + AD,41,NA,NA,NA,NA
+SNRIs,7145,NA,NA,NA,NA
+SSRIs,17305,NA,NA,NA,NA
+TAU,220,NA,NA,NA,NA
+TCAs,4271,NA,NA,NA,NA
+Trazodone,1072,NA,NA,NA,NA
+Waitlist,526,NA,NA,NA,NA
+Yoga group,35,NA,NA,NA,NA
+Yoga group + AD,15,NA,NA,NA,NA
