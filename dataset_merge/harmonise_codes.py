@@ -138,7 +138,10 @@ def recode_ls_sheet(sheet_xml, sst_xml, trt_map, merged):
         v = c.find(f"{{{NS}}}v")
         if v is None:
             return None
-        return strings[int(v.text)] if c.get("t") == "s" else float(v.text)
+        t = c.get("t")
+        if t == "s":
+            return strings[int(v.text)]
+        return float(v.text) if t in (None, "n") else v.text
 
     sheet_data = sheet.find(f"{{{NS}}}sheetData")
     rows = {int(r.get("r")): r for r in sheet_data.findall(f"{{{NS}}}row")}
@@ -218,7 +221,8 @@ def recode_ls_sheet(sheet_xml, sst_xml, trt_map, merged):
         end_ref = end_ref or start_ref
         end_row = max(int(re.search(r"\d+$", end_ref).group(0)), max(rows))
         dim.set("ref", f"{start_ref}:{re.match(r'[A-Z]+', end_ref).group(0)}{end_row}")
-    sst.set("count", str(int(sst.get("count")) - removed_strings + added_strings))
+    if sst.get("count") is not None:
+        sst.set("count", str(int(sst.get("count")) - removed_strings + added_strings))
     sst.set("uniqueCount", str(len(strings)))
 
     def dump(root):
