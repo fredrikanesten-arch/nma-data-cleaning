@@ -1,0 +1,77 @@
+﻿trt;ls_trtcode;merge_trtcode;class;ls_classcode;merge_classcode;status
+Attention placebo;1;2;Attention placebo;1;2;matched
+Pill placebo;2;1;Placebo;2;1;matched
+No treatment;3;3;No treatment;3;3;matched
+Waitlist;4;4;Waitlist;4;4;matched
+TAU;5;5;TAU;5;5;matched
+Enhanced TAU;6;100;Enhanced TAU;6;51;added
+Behavioural activation (BA) individual;7;8;Behavioural therapies individual;7;8;matched
+Behavioural activation (BA) group;8;101;Behavioural therapies group;8;52;added
+Coping with Depression course (group);9;102;Behavioural therapies group;8;52;added
+CBT individual (15 sessions or over);10;10;Cognitive and cognitive behavioural therapies individual;9;9;matched
+CBT individual (under 15 sessions);11;11;Cognitive and cognitive behavioural therapies individual;9;9;matched
+Third-wave cognitive therapy individual;12;13;Cognitive and cognitive behavioural therapies individual;9;9;matched
+CBT group (15 sessions or over);13;103;Cognitive and cognitive behavioural therapies group;10;10;added
+CBT group (under 15 sessions);14;14;Cognitive and cognitive behavioural therapies group;10;10;matched
+Positive psychotherapy (PPT) group;15;104;Cognitive and cognitive behavioural therapies group;10;10;added
+Rational emotive behaviour therapy (REBT) group;16;105;Cognitive and cognitive behavioural therapies group;10;10;added
+Third-wave cognitive therapy group;17;106;Cognitive and cognitive behavioural therapies group;10;10;added
+Problem solving individual;18;15;Problem solving individual;11;11;matched
+Problem solving group;19;16;Problem solving group;12;12;matched
+Non-directive/supportive/person-centred counselling;20;17;Counselling individual;13;13;matched
+Interpersonal counselling individual;21;107;Interpersonal psychotherapy (IPT) individual;14;14;added
+Interpersonal psychotherapy (IPT) individual;22;18;Interpersonal psychotherapy (IPT) individual;14;14;matched
+Psychoeducational group programme;23;19;Psychoeducation group;15;15;matched
+Behavioural bibliotherapy;24;108;Self-help;16;16;added
+Cognitive bibliotherapy;25;20;Self-help;16;16;matched
+Computerised-CBT (CCBT);26;21;Self-help;16;16;matched
+Computerised attentional bias modification;27;22;Self-help;16;16;matched
+Computerised behavioural activation;28;109;Self-help;16;16;added
+Computerised cognitive bias modification;29;110;Self-help;16;16;added
+Computerised Coping with Depression course;30;111;Self-help;16;16;added
+Computerised expressive writing;31;112;Self-help;16;16;added
+Computerised mindfulness intervention;32;113;Self-help;16;16;added
+Computerised positive psychological intervention;33;114;Self-help;16;16;added
+Computerised problem solving therapy;34;115;Self-help;16;16;added
+Computerised third-wave cognitive therapy;35;116;Self-help;16;16;added
+Expressive writing;36;117;Self-help;16;16;added
+Psychoeducational website;37;118;Self-help;16;16;added
+Behavioural bibliotherapy with support;38;119;Self-help with support;17;17;added
+Cognitive bias modification with support;39;120;Self-help with support;17;17;added
+Cognitive bibliotherapy with support;40;24;Self-help with support;17;17;matched
+Computerised-CBT (CCBT) with support;41;25;Self-help with support;17;17;matched
+Computerised behavioural activation with support;42;121;Self-help with support;17;17;added
+Computerised exercise promotion with support;43;122;Self-help with support;17;17;added
+Computerised problem solving therapy with support;44;123;Self-help with support;17;17;added
+Computerised third-wave cognitive therapy with support;45;124;Self-help with support;17;17;added
+Expressive writing with support;46;125;Self-help with support;17;17;added
+Third-wave cognitive therapy CD with support;47;126;Self-help with support;17;17;added
+Short-term psychodynamic psychotherapy individual;48;29;Short-term psychodynamic psychotherapies individual;18;18;matched
+Mindfulness-based stress reduction (MBSR) individual;49;127;Mindfulness or meditation individual;19;53;added
+Meditation-relaxation group;50;128;Mindfulness or meditation group;20;20;added
+Mindfulness-based cognitive therapy (MBCT) group;51;31;Mindfulness or meditation group;20;20;matched
+Mindfulness-based stress reduction (MBSR) group;52;129;Mindfulness or meditation group;20;20;added
+Mindfulness meditation group;53;130;Mindfulness or meditation group;20;20;added
+Progressive muscle relaxation individual;54;131;Relaxation individual;21;54;added
+Progressive muscle relaxation group;55;132;Relaxation group;22;55;added
+Any SSRI;56;39;SSRIs;23;27;matched
+Citalopram;57;40;SSRIs;23;27;matched
+Fluoxetine;58;42;SSRIs;23;27;matched
+Sertraline;59;44;SSRIs;23;27;matched
+Amitriptyline;60;45;TCAs;24;28;matched
+Any TCA;61;46;TCAs;24;28;matched
+Imipramine;62;48;TCAs;24;28;matched
+Lofepramine;63;49;TCAs;24;28;matched
+Any AD;64;53;Any AD;25;30;matched
+Traditional acupuncture;65;59;Acupuncture;26;32;matched
+Supervised high intensity exercise individual;66;60;Exercise individual;27;33;matched
+Supervised low intensity exercise individual;67;61;Exercise individual;27;33;matched
+Unsupervised low intensity exercise individual;68;133;Exercise individual;27;33;added
+Supervised high intensity exercise group;69;63;Exercise group;28;34;matched
+Supervised low intensity exercise group;70;64;Exercise group;28;34;matched
+Yoga group;71;65;Yoga group;29;35;matched
+CBT group (under 15 sessions) + any AD;72;76;Cognitive and cognitive behavioural therapies group + AD;30;39;matched
+Body-mind-spirit group + any AD;73;134;Mindfulness or meditation group + AD;31;56;added
+Traditional acupuncture + non-directive/supportive/person-centred counselling;74;135;Acupuncture + counselling individual;32;57;added
+CBT individual (under 15 sessions) + supervised high intensity exercise group;75;136;Cognitive and cognitive behavioural therapies individual + exercise group;33;58;added
+CBT group (under 15 sessions) + supervised low intensity exercise group;76;137;Cognitive and cognitive behavioural therapies group + exercise group;34;59;added

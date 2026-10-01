@@ -1,0 +1,77 @@
+﻿trtcode;trt;classcode;class
+1;Attention placebo;1;Attention placebo
+2;Pill placebo;2;Placebo
+3;No treatment;3;No treatment
+4;Waitlist;4;Waitlist
+5;TAU;5;TAU
+6;Enhanced TAU;6;Enhanced TAU
+7;Behavioural activation (BA) individual;7;Behavioural therapies individual
+8;Behavioural activation (BA) group;8;Behavioural therapies group
+9;Coping with Depression course (group);8;Behavioural therapies group
+10;CBT individual (15 sessions or over);9;Cognitive and cognitive behavioural therapies individual
+11;CBT individual (under 15 sessions);9;Cognitive and cognitive behavioural therapies individual
+12;Third-wave cognitive therapy individual;9;Cognitive and cognitive behavioural therapies individual
+13;CBT group (15 sessions or over);10;Cognitive and cognitive behavioural therapies group
+14;CBT group (under 15 sessions);10;Cognitive and cognitive behavioural therapies group
+15;Positive psychotherapy (PPT) group;10;Cognitive and cognitive behavioural therapies group
+16;Rational emotive behaviour therapy (REBT) group;10;Cognitive and cognitive behavioural therapies group
+17;Third-wave cognitive therapy group;10;Cognitive and cognitive behavioural therapies group
+18;Problem solving individual;11;Problem solving individual
+19;Problem solving group;12;Problem solving group
+20;Non-directive/supportive/person-centred counselling;13;Counselling individual
+21;Interpersonal counselling individual;14;Interpersonal psychotherapy (IPT) individual
+22;Interpersonal psychotherapy (IPT) individual;14;Interpersonal psychotherapy (IPT) individual
+23;Psychoeducational group programme;15;Psychoeducation group
+24;Behavioural bibliotherapy;16;Self-help
+25;Cognitive bibliotherapy;16;Self-help
+26;Computerised-CBT (CCBT);16;Self-help
+27;Computerised attentional bias modification;16;Self-help
+28;Computerised behavioural activation;16;Self-help
+29;Computerised cognitive bias modification;16;Self-help
+30;Computerised Coping with Depression course;16;Self-help
+31;Computerised expressive writing;16;Self-help
+32;Computerised mindfulness intervention;16;Self-help
+33;Computerised positive psychological intervention;16;Self-help
+34;Computerised problem solving therapy;16;Self-help
+35;Computerised third-wave cognitive therapy;16;Self-help
+36;Expressive writing;16;Self-help
+37;Psychoeducational website;16;Self-help
+38;Behavioural bibliotherapy with support;17;Self-help with support
+39;Cognitive bias modification with support;17;Self-help with support
+40;Cognitive bibliotherapy with support;17;Self-help with support
+41;Computerised-CBT (CCBT) with support;17;Self-help with support
+42;Computerised behavioural activation with support;17;Self-help with support
+43;Computerised exercise promotion with support;17;Self-help with support
+44;Computerised problem solving therapy with support;17;Self-help with support
+45;Computerised third-wave cognitive therapy with support;17;Self-help with support
+46;Expressive writing with support;17;Self-help with support
+47;Third-wave cognitive therapy CD with support;17;Self-help with support
+48;Short-term psychodynamic psychotherapy individual;18;Short-term psychodynamic psychotherapies individual
+49;Mindfulness-based stress reduction (MBSR) individual;19;Mindfulness or meditation individual
+50;Meditation-relaxation group;20;Mindfulness or meditation group
+51;Mindfulness-based cognitive therapy (MBCT) group;20;Mindfulness or meditation group
+52;Mindfulness-based stress reduction (MBSR) group;20;Mindfulness or meditation group
+53;Mindfulness meditation group;20;Mindfulness or meditation group
+54;Progressive muscle relaxation individual;21;Relaxation individual
+55;Progressive muscle relaxation group;22;Relaxation group
+56;Any SSRI;23;SSRIs
+57;Citalopram;23;SSRIs
+58;Fluoxetine;23;SSRIs
+59;Sertraline;23;SSRIs
+60;Amitriptyline;24;TCAs
+61;Any TCA;24;TCAs
+62;Imipramine;24;TCAs
+63;Lofepramine;24;TCAs
+64;Any AD;25;Any AD
+65;Traditional acupuncture;26;Acupuncture
+66;Supervised high intensity exercise individual;27;Exercise individual
+67;Supervised low intensity exercise individual;27;Exercise individual
+68;Unsupervised low intensity exercise individual;27;Exercise individual
+69;Supervised high intensity exercise group;28;Exercise group
+70;Supervised low intensity exercise group;28;Exercise group
+71;Yoga group;29;Yoga group
+72;CBT group (under 15 sessions) + any AD;30;Cognitive and cognitive behavioural therapies group + AD
+73;Body-mind-spirit group + any AD;31;Mindfulness or meditation group + AD
+74;Traditional acupuncture + non-directive/supportive/person-centred counselling;32;Acupuncture + counselling individual
+75;CBT individual (under 15 sessions) + supervised high intensity exercise group;33;Cognitive and cognitive behavioural therapies individual + exercise group
+76;CBT group (under 15 sessions) + supervised low intensity exercise group;34;Cognitive and cognitive behavioural therapies group + exercise group
