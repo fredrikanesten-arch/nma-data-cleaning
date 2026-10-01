@@ -1,17 +1,16 @@
-"""Harmonise LS treatment/class codes with the MS coding so the two datasets can be merged.
+"""Harmonise LS treatment/class codes and merge LS/MS data blocks by header.
 
 - trt_to_class_ms.csv is the base: its treatment and class codes are kept unchanged.
 - Every treatment/class in trt_to_class_ls.csv is matched to MS by name. Treatments and
   classes that do not exist in MS are appended after the last MS code (in LS order).
-- The t[,1]..t[,5] columns of every data block in the "LS SMD bias-adj" sheet are recoded
-  to the merged codes, and the sheet's TREATMENT AND CLASS CODES table is replaced by the
-  merged table. The "MS SMD bias-adj" sheet is not modified.
+- The t[,1]..t[,5] columns of every LS data block are recoded to the merged codes.
+- Corresponding LS and MS data blocks are stacked by column header in a single sheet,
+  alongside the merged treatment/class code table.
 
 Usage: python3 harmonise_codes.py   (requires lxml)
-Only the LS worksheet XML and the shared-strings part are rewritten; every other part of
-the workbook (MS sheet, Excel tables, styles) is copied unchanged.
 """
 
+import copy
 import csv
 import os
 import re
@@ -239,6 +238,127 @@ def sheet_path(z, name):
     return target.lstrip("/") if target.startswith("/") else "xl/" + target
 
 
+def merge_sheets(ms_xml, ls_xml, sst_xml, merged):
+    """Build a standalone worksheet with corresponding blocks aligned by header."""
+    strings = ["".join(si.itertext()) for si in etree.fromstring(sst_xml).findall(f"{{{NS}}}si")]
+
+    def text(cell):
+        v = cell.find(f"{{{NS}}}v")
+        if cell.get("t") == "s":
+            return strings[int(v.text)]
+        if cell.get("t") == "inlineStr":
+            return "".join(cell.find(f"{{{NS}}}is").itertext())
+        return v.text if v is not None else None
+
+    def blocks(xml):
+        result = []
+        header = None
+        data = []
+        for row in etree.fromstring(xml).findall(f".//{{{NS}}}sheetData/{{{NS}}}row"):
+            cells = {col_index(c.get("r")): c for c in row.findall(f"{{{NS}}}c")}
+            first = text(cells[1]) if 1 in cells else None
+            if first == "na[]":
+                if header is not None:
+                    result.append((header, data))
+                labels = [(text(c), col) for col, c in cells.items()
+                          if col < CODE_TABLE_COL and text(c)]
+                if len(labels) != len({label for label, _ in labels}):
+                    raise ValueError("Duplicate data block headers")
+                header = dict(labels)
+                data = []
+            elif header is not None and first is not None and str(first).isdigit():
+                data.append(cells)
+            elif header is not None:
+                result.append((header, data))
+                header, data = None, []
+        if header is not None:
+            result.append((header, data))
+        return result
+
+    def put(row, col, value):
+        cell = etree.SubElement(row, f"{{{NS}}}c", r=f"{col_letter(col)}{row.get('r')}")
+        if isinstance(value, str):
+            cell.set("t", "inlineStr")
+            etree.SubElement(etree.SubElement(cell, f"{{{NS}}}is"), f"{{{NS}}}t").text = value
+        else:
+            etree.SubElement(cell, f"{{{NS}}}v").text = str(value)
+
+    def copy_cell(row, col, source):
+        cell = copy.deepcopy(source)
+        cell.set("r", f"{col_letter(col)}{row.get('r')}")
+        cell.attrib.pop("s", None)  # The standalone workbook has no source styles.
+        if cell.get("t") == "s":
+            value = text(cell)
+            cell.remove(cell.find(f"{{{NS}}}v"))
+            cell.set("t", "inlineStr")
+            etree.SubElement(etree.SubElement(cell, f"{{{NS}}}is"), f"{{{NS}}}t").text = value
+        row.append(cell)
+
+    ms_blocks, ls_blocks = blocks(ms_xml), blocks(ls_xml)
+    if len(ms_blocks) != 3 or len(ls_blocks) != len(ms_blocks):
+        raise ValueError("Expected three corresponding MS and LS data blocks")
+
+    sheet = etree.Element(f"{{{NS}}}worksheet", nsmap={None: NS})
+    dimension = etree.SubElement(sheet, f"{{{NS}}}dimension")
+    sheet_data = etree.SubElement(sheet, f"{{{NS}}}sheetData")
+    title = etree.SubElement(sheet_data, f"{{{NS}}}row", r="1")
+    put(title, 1, "DATA")
+    put(title, CODE_TABLE_COL, "TREATMENT AND CLASS CODES")
+    row_number = 2
+    counts = []
+    for (ms_header, ms_data), (ls_header, ls_data) in zip(ms_blocks, ls_blocks):
+        if not {"na[]", "studyid"}.issubset(ms_header) or not {"na[]", "studyid"}.issubset(ls_header):
+            raise ValueError("Missing required data block headers")
+        headers = list(ms_header) + [h for h in ls_header if h not in ms_header]
+        if len(headers) >= CODE_TABLE_COL:
+            raise ValueError("Data block overlaps the treatment/class code table")
+        header_row = etree.SubElement(sheet_data, f"{{{NS}}}row", r=str(row_number))
+        for col, label in enumerate(headers, 1):
+            put(header_row, col, label)
+        row_number += 1
+        for source_header, source_rows in ((ms_header, ms_data), (ls_header, ls_data)):
+            for source_cells in source_rows:
+                row = etree.SubElement(sheet_data, f"{{{NS}}}row", r=str(row_number))
+                for col, label in enumerate(headers, 1):
+                    src_col = source_header.get(label)
+                    if src_col is None:
+                        put(row, col, "NA")
+                    elif src_col in source_cells:
+                        copy_cell(row, col, source_cells[src_col])
+                row_number += 1
+        counts.append((len(ms_data), len(ls_data)))
+        row_number += 1  # Separate the outcome blocks.
+
+    rows = {int(row.get("r")): row for row in sheet_data}
+    for i, values in enumerate([("trtcode", "trt", "classcode", "class")] +
+                               [tuple(rec[k] for k in ("trtcode", "trt", "classcode", "class"))
+                                for rec in merged], 2):
+        row = rows.get(i)
+        if row is None:
+            row = etree.Element(f"{{{NS}}}row", r=str(i))
+            sheet_data.append(row)
+            rows[i] = row
+        for col, val in enumerate(values, CODE_TABLE_COL):
+            put(row, col, val)
+    sheet_data[:] = [rows[i] for i in sorted(rows)]
+    dimension.set("ref", f"A1:AP{max(rows)}")
+    return etree.tostring(sheet, xml_declaration=True, encoding="UTF-8", standalone=True), counts
+
+
+def write_workbook(path, sheet_xml):
+    """Write a minimal one-sheet XLSX using inline strings and numeric cells."""
+    parts = {
+        "[Content_Types].xml": b'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/></Types>',
+        "_rels/.rels": b'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>',
+        "xl/workbook.xml": b'<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="Merged dataset" sheetId="1" r:id="rId1"/></sheets></workbook>',
+        "xl/_rels/workbook.xml.rels": b'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/></Relationships>',
+        "xl/worksheets/sheet1.xml": sheet_xml,
+    }
+    with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as output:
+        for name, data in parts.items():
+            output.writestr(name, data)
+
+
 def main():
     ms = read_codes(os.path.join(IN_DIR, "trt_to_class_ms.csv"))
     ls = read_codes(os.path.join(IN_DIR, "trt_to_class_ls.csv"))
@@ -253,15 +373,16 @@ def main():
     with zipfile.ZipFile(src) as zin:
         ls_path = sheet_path(zin, LS_SHEET)
         sheet_xml, sst_xml, n = recode_ls_sheet(zin.read(ls_path), zin.read(SST_PATH), trt_map, merged)
-        with zipfile.ZipFile(dst, "w", zipfile.ZIP_DEFLATED) as zout:
-            for item in zin.infolist():
-                data = {ls_path: sheet_xml, SST_PATH: sst_xml}.get(item.filename) or zin.read(item.filename)
-                zout.writestr(item, data)
+        merged_xml, counts = merge_sheets(
+            zin.read(sheet_path(zin, "MS SMD bias-adj")), sheet_xml, sst_xml, merged
+        )
+    write_workbook(dst, merged_xml)
 
     added = sum(r["status"] == "added" for r in mapping_rows)
     print(f"Merged table: {len(merged)} treatments, {max(r['classcode'] for r in merged)} classes")
     print(f"LS treatments matched to MS: {len(mapping_rows) - added}, added: {added}")
     print(f"Recoded {n} treatment cells in '{LS_SHEET}'")
+    print(f"Merged MS/LS rows by block: {counts}")
     for w in warnings:
         print("WARNING:", w)
 
